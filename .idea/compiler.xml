@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
+    <bytecodeTargetLevel target="11" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="gradle_client" options="--add-exports javafx.graphics/com.sun.javafx=ALL-UNNAMED,client --add-exports javafx.graphics/com.sun.javafx.application=client" />
+      <module name="gradle_client.main" options="--add-exports javafx.graphics/com.sun.javafx=ALL-UNNAMED,client --add-exports javafx.graphics/com.sun.javafx.application=client --add-exports javafx.graphics/com.sun.javafx.stage=client --add-exports java.datatransfer/java.awt=client" />
+    </option>
+  </component>
+</project>

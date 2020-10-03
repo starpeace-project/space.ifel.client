@@ -1,0 +1,205 @@
+.root {
+    -fx-background-color: transparent;
+    -fx-padding: 15;
+    -fx-focus-color: transparent;
+}
+
+
+.greenRoot {
+    -fx-background-color: transparent;
+    -fx-accent: green;
+}
+
+.progress-bar {
+    -fx-box-border: goldenrod;
+}
+
+.green-bar {
+    -fx-accent: green;
+}
+
+.yellow-bar {
+    -fx-accent: yellow;
+}
+
+.orange-bar {
+    -fx-accent: orange;
+}
+
+.red-bar {
+    -fx-accent: red;
+}
+
+.skinny {
+    -fx-max-height: 15;
+    -fx-padding: 0;
+}
+
+.transparent {
+    -fx-background-color: transparent;
+}
+
+.bg-gray {
+    -fx-background-color: #212931;
+}
+
+.bg-black {
+    -fx-background-color: black;
+}
+
+.border {
+    -fx-border-color: green;
+}
+
+.green {
+    -fx-text-fill: green
+}
+
+.full-width {
+    -fx-padding: 0;
+}
+
+
+.tab-pane:top *.tab-header-area {
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.416667em 0.166667em 0.0em 0.0em;
+    -fx-background-color: #212931;
+    -fx-prompt-text-fill: #4d6b53;
+    -fx-font-size: 24;
+    -fx-text-fill: #212931;
+}
+
+.tab-pane .tab {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: #4d6b53;
+    -fx-max-height: 60;
+}
+
+.tab-pane *.tab-header-area *.tab-header-background {
+    -fx-background-color: #212931;
+}
+
+.tab-pane *.tab-content-area *.anchor-pane {
+    -fx-background-color: #212931;
+    -fx-min-width: 100%;
+}
+
+.tab-pane .tab:selected {
+    -fx-border-color: #4d6b53;
+}
+
+.tab-pane:top *.tab-header-area *.tab-label *.text {
+    -fx-fill: #4d6b53;
+}
+
+.text {
+    -fx-prompt-text-fill: green;
+}
+
+.tab-content-area {
+    -fx-border-color: #4d6b53;
+}
+
+.tab-panel:top *.tab-header-area *.tab-headers-region *.tab:top {
+    -fx-min-width: -1;
+    -fx-background-color: #212931;
+}
+
+.world {
+    -fx-text-alignment: center;
+    -fx-text-fill: #4d6b53;
+    -fx-font-size: 17;
+}
+
+.world-title {
+    -fx-text-fill: #4d6b53;
+    -fx-font-size: 24;
+}
+
+
+/* TEXT FIELD - PASSWORD FIELDS - BUTTONS - CHECKBOXES - FINAL */
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: #65967d;
+    -fx-pref-width: 137;
+    -fx-pref-height: 53;
+    -fx-font-size: 24px;
+}
+
+.button:hover {
+    -fx-border-color: #31c479;
+    -jfx-focus-color: #31c479;
+}
+
+.button .text {
+    -fx-fill: #65967d;
+}
+
+.button:hover .text {
+    -fx-fill: #31c479;
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: #65967d;
+    -fx-text-fill: #31c479;
+    -fx-border-color: transparent transparent #65967d transparent;
+    -fx-padding: -8 0 -8 0;
+}
+
+.text-field:hover {
+    -fx-prompt-text-fill: #31c479;
+    -fx-border-color: transparent transparent #31c479 transparent;
+}
+
+.text-field:focused {
+    -fx-prompt-text-fill: transparent;
+}
+
+.highlight {
+    -fx-image: url("../../logos/cog.png");
+}
+
+.highlight:hover {
+    -fx-image: url("../../logos/cog-higlighted.png");
+}
+
+.check-box {
+    -fx-background-color: transparent;
+    -fx-text-fill: #65967d;
+    -fx-font-size: 18px;
+}
+
+.check-box:hover {
+    -fx-text-fill: #31c479;
+}
+
+.check-box:hover .box {
+    -fx-border-color: #31c479;
+}
+
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #65967d;
+}
+
+.bordered {
+    -fx-border-color: #65967d;
+}
+
+.slider .thumb {
+    -fx-background-color: #65967d;
+}
+
+.slider .thumb:hover {
+    -fx-background-color:  #31c479;
+}
+
+.slider .track {
+    -fx-background-color: #65967d;
+}
+
+.slider:hover .track {
+    -fx-background-color: #31c479;
+}
+

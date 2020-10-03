@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+apply plugin : "java"
+sourceCompatibility = 11
+targetCompatibility = 11
+
+mainClassName = 'client.GameClient'
+
+group 'space.ifel'
+version '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+task getDeps(type: Copy) {
+    from sourceSets.main.runtimeClasspath
+    into 'output/'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation("org.openjfx:javafx-fxml:15:mac")
+    implementation("org.openjfx:javafx-web:15:mac")
+    implementation("org.openjfx:javafx-media:15:mac")
+    implementation("org.openjfx:javafx-swing:15:mac")
+    implementation("org.openjfx:javafx-base:15:mac")
+    implementation("org.openjfx:javafx-graphics:15:mac")
+    implementation("org.openjfx:javafx-controls:15:mac")
+    compile 'com.jfoenix:jfoenix:9.0.10'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    compile group: 'org.joml', name: 'joml', version: '1.9.2'
+    compile group: 'org.yaml', name: 'snakeyaml', version: '1.27'
+    compile 'de.jensd:fontawesomefx-emojione:2.2.7-2'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
+    compile 'de.jensd:fontawesomefx-icons525:3.0.0-4'
+    compile 'de.jensd:fontawesomefx-materialdesignfont:1.7.22-4'
+    compile 'de.jensd:fontawesomefx-materialicons:2.2.0-5'
+    compile 'de.jensd:fontawesomefx-octicons:4.3.0-5'
+    compile 'de.jensd:fontawesomefx-weathericons:2.0.10-5'
+    compile 'de.jensd:fontawesomefx-controls:8.15'
+}
+
+javafx {
+    version = "15"
+    modules = [ 'javafx.fxml', 'javafx.web', 'javafx.media', 'javafx.swing', 'javafx.base', 'javafx.graphics', 'javafx.controls']
+}
+
+//sourceSets {
+//    main {
+//        output.resourcesDir = "${buildDir}/classes"
+//    }
+//}
