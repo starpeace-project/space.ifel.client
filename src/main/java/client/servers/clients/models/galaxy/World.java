@@ -112,4 +112,15 @@ public class World {
     }
 
     int modelDirectAccessPort;
+
+    @JsonProperty("date")
+    public int getDate() {
+        return this.date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
+    }
+
+    public int date;
 }

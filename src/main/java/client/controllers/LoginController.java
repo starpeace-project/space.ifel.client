@@ -1,14 +1,19 @@
 package client.controllers;
 
 import client.GameClient;
+import client.configuration.Config;
+import client.configuration.ConfigManager;
+import client.configuration.QuickLogon;
 import client.utilities.GameState;
 import client.utilities.StringUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -17,8 +22,12 @@ import java.util.ResourceBundle;
 public class LoginController {
     private static LoginController instance;
 
+    private Config config;
+
     @FXML
     TextField loginAliasTextField;
+    @FXML
+    ComboBox<String> loginAliasComboBox;
     @FXML
     Label loginAliasErrorLabel;
     @FXML
@@ -29,41 +38,64 @@ public class LoginController {
     Label loginGeneralErrorLabel;
     @FXML
     ImageView cog;
+    @FXML
+    Pane pane;
 
     private Locale locale = Locale.getDefault();
     private ResourceBundle messages = ResourceBundle.getBundle("i18n.messages", locale);
 
     public LoginController() {
         instance = this;
+        this.config = (Config) ConfigManager.get("config");
     }
 
     public static LoginController getInstance() {
         return instance;
     }
 
-    public void initialise() {
-        loginAliasTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            IntroConfigController.getInstance().beep();
+    public void initialize() {
+        for (QuickLogon logon : config.getQuickLogons()) {
+            loginAliasComboBox.getItems().add(logon.getAlias() + " - " + logon.getWorld());
+        }
+        if (config.getQuickLogon()) {
+            loginAliasTextField.setVisible(false);
+        } else {
+            loginAliasComboBox.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void validateAlias() {
+        IntroConfigController.getInstance().beep();
+
+        if (!config.getQuickLogon()) {
             if (StringUtils.isValidString(loginAliasTextField.getText())) {
                 loginAliasErrorLabel.setText("");
                 return;
             }
-            loginAliasErrorLabel.setText(messages.getString("invalid_alias"));
-        });
+        } else {
+            if (StringUtils.isValidString(loginAliasComboBox.getEditor().getText())) {
+                loginAliasErrorLabel.setText("");
+                return;
+            }
+        }
 
-        loginPasswordTextField.textProperty().addListener(((observable, oldValue, newValue) -> {
-            IntroConfigController.getInstance().beep();
-        }));
-
-        cog.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
-            System.out.println("Opening Intro Config");
-            GameClient.getInstance().setState(GameState.INTRO_CONFIG);
-        });
+        loginAliasErrorLabel.setText(messages.getString("invalid_alias"));
     }
 
+    @FXML
+    private void validatePassword() {
+        IntroConfigController.getInstance().beep();
+    }
 
     @FXML
-    private void goRegister() throws IOException {
+    private void configClick() {
+        IntroConfigController.getInstance().beep();
+        GameClient.getInstance().setState(GameState.INTRO_CONFIG);
+    }
+
+    @FXML
+    private void goRegister() {
         GameClient.getInstance().setState(GameState.REGISTER);
     }
 
@@ -76,11 +108,21 @@ public class LoginController {
     @FXML
     private void doLogin() {
         emptyLoginErrorLabels();
+
+        String value = "";
+        if (config.getQuickLogon()) {
+            value = loginAliasComboBox.getValue();
+        } else {
+            value = loginAliasTextField.getText();
+        }
+
         System.out.println("Logging in.");
-        if (loginAliasTextField.getText().equals("")) {
+
+        if (value == null || value.equals("")) {
             loginAliasErrorLabel.setText(messages.getString("enter_player_alias"));
             return;
         }
+
         if (loginPasswordTextField.getText().equals("")) {
             loginPasswordErrorLabel.setText(messages.getString("enter_password"));
             return;
@@ -88,6 +130,14 @@ public class LoginController {
 
         // We are good to attempt login.
 
+        //Fake login for now
+        GameClient.getInstance().setLoggedIn(true);
+
         GameClient.getInstance().setState(GameState.GALAXY);
+    }
+
+    @FXML
+    public void buttonClick() {
+        IntroConfigController.getInstance().beep();
     }
 }

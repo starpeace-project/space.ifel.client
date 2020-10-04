@@ -28,7 +28,7 @@ public class StringUtils {
             valid = ((c >= 'a') && (c <= 'z')) ||
                     ((c >= 'A') && (c <= 'Z')) ||
                     ((c >= '0') && (c <= '9')) ||
-                    c == '_';
+                    c == '_' || c == ' ';
 
             if (!valid) {
                 break;

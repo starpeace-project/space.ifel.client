@@ -43,26 +43,30 @@ public class RegisterController {
         return instance;
     }
 
-    public void initialise() {
-        registerAliasTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            IntroConfigController.getInstance().beep();
-            if (StringUtils.isValidString(registerAliasTextField.getText())) {
-                registerAliasErrorLabel.setText("");
-                return;
-            }
-            registerAliasErrorLabel.setText(messages.getString("invalid_alias"));
-        });
+    @FXML
+    private void validateAlias() {
+        IntroConfigController.getInstance().beep();
+        if (StringUtils.isValidString(registerAliasTextField.getText())) {
+            registerAliasErrorLabel.setText("");
+            return;
+        }
+        registerAliasErrorLabel.setText(messages.getString("invalid_alias"));
+    }
 
-        registerEmailTextField.textProperty().addListener(((observable, oldValue, newValue) -> {
-            IntroConfigController.getInstance().beep();
-            if (registerEmailTextField.getText().contains("@") && !EmailValidator.validate(registerEmailTextField.getText())) {
-                registerEmailErrorLabel.setText(messages.getString("email_error"));
-                return;
-            }
-            registerEmailErrorLabel.setText("");
-        }));
+    @FXML
+    private void validateEmail() {
+        IntroConfigController.getInstance().beep();
+        if (registerEmailTextField.getText().contains("@") && !EmailValidator.validate(registerEmailTextField.getText())) {
+            registerEmailErrorLabel.setText(messages.getString("email_error"));
+            return;
+        }
+        registerEmailErrorLabel.setText("");
+    }
 
-        cog.setOnMouseClicked(event -> GameClient.getInstance().setState(GameState.INTRO_CONFIG));
+    @FXML
+    private void configClick() {
+        IntroConfigController.getInstance().beep();
+        GameClient.getInstance().setState(GameState.INTRO_CONFIG);
     }
 
     private void emptyRegisterErrorLabels() {
@@ -93,5 +97,10 @@ public class RegisterController {
     @FXML
     private void goLogin() {
         GameClient.getInstance().setState(GameState.LOGIN);
+    }
+
+    @FXML
+    private void buttonClick() {
+        IntroConfigController.getInstance().beep();
     }
 }

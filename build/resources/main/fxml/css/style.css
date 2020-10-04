@@ -43,6 +43,10 @@
     -fx-background-color: #212931;
 }
 
+.gb-gray-compliment {
+    -fx-background-color: #312921;
+}
+
 .bg-black {
     -fx-background-color: black;
 }
@@ -72,7 +76,26 @@
 .tab-pane .tab {
     -fx-background-color: transparent;
     -fx-prompt-text-fill: #4d6b53;
-    -fx-max-height: 60;
+    /*-fx-max-height: 60;*/
+    -fx-pref-height: 60;
+}
+
+.tab-pane:top .tab-header-area .headers-region {
+    -fx-background-color: transparent;
+    -fx-border-color: #4d6b53 #4d6b53 transaparent #4d6b53;
+}
+
+.tab-pane:top .tab-header-area .headers-region .tab:selected:top {
+    -fx-background-color: transparent;
+    -fx-border-color: #4d6b53 #4d6b53 transaparent #4d6b53;
+}
+
+.tab-pane:top .tab-header-area .headers-region .tab:top .tab-container .focus-indicator {
+    -fx-text-fill: #31c479;
+}
+
+.tab-pane:top .tab-header-area .control-buttons-tab {
+    -fx-background-color: red;
 }
 
 .tab-pane *.tab-header-area *.tab-header-background {
@@ -114,8 +137,31 @@
 .world-title {
     -fx-text-fill: #4d6b53;
     -fx-font-size: 24;
+    -fx-alignment: center;
+    -fx-min-width: 354px;
 }
 
+#world-pane {
+    -fx-border-radius: 10px;
+    -fx-padding: 10;
+}
+#world-pane:hover {
+    -fx-border-color: #31c479;
+    -fx-background-color: #213129;
+}
+
+#world-pane:hover .label {
+    -fx-text-fill: #31c479;
+}
+
+#world-pane:selected {
+    -fx-border-color: #31c479;
+    -fx-background-color: #213129;
+}
+
+#world-pane:selected .label {
+    -fx-text-fill: #31c479;
+}
 
 /* TEXT FIELD - PASSWORD FIELDS - BUTTONS - CHECKBOXES - FINAL */
 .button {
@@ -124,11 +170,12 @@
     -fx-pref-width: 137;
     -fx-pref-height: 53;
     -fx-font-size: 24px;
+    -fx-border-radius: 5px;
 }
 
 .button:hover {
     -fx-border-color: #31c479;
-    -jfx-focus-color: #31c479;
+    -fx-background-color: #213129;
 }
 
 .button .text {
@@ -154,6 +201,47 @@
 
 .text-field:focused {
     -fx-prompt-text-fill: transparent;
+}
+
+.combo-box:editable {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: #65967d;
+    -fx-border-color: transparent transparent #65967d transparent;
+    -fx-padding: -8 0 -8 0;
+    -fx-font-size: 24;
+}
+
+.combo-box:editable .text-field {
+    -fx-border-color: transparent transparent transparent transparent;
+}
+
+.combo-box:editable .list-view {
+    -fx-background-color: transparent;
+}
+
+.combo-box:editable .list-view .list-cell:hover {
+    -fx-text-fill: #31c479;
+}
+
+
+.combo-box:editable:hover {
+    -fx-border-color: transparent transparent #31c479 transparent;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: #65967d;
+}
+
+.combo-box:hover .arrow-button .arrow {
+    -fx-background-color: #31c479;
+}
+
+.combo-box:hover .list-cell {
+    -fx-text-fill: #31c479;
 }
 
 .highlight {
@@ -203,3 +291,29 @@
     -fx-background-color: #31c479;
 }
 
+/* TAB STYLE */
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-font-size: 18px;
+    -fx-pref-width: 200px;
+}
+
+.tab-pane:top .tab-header-area .headers-region .tab:selected:top .tab-container .tab-label .text {
+    -fx-fill: #31c479;
+}
+
+.tab-pane:top .tab-header-area .headers-region .tab:top .tab-container .tab-label .text:hover {
+    -fx-fill: #31c479;
+}
+
+.tab-pane:top .tab-header-area .headers-region .tab:top:selected .tab-container {
+    -fx-border-radius: 5px;
+    -fx-border-color: #31c479;
+    -fx-background-color: #213129;
+}
+
+.tab-pane:top .tab-content-area {
+    -fx-border-color: transparent;
+    -fx-padding: 20px;
+}

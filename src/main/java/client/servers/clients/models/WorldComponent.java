@@ -1,6 +1,5 @@
 package client.servers.clients.models;
 
-import client.GameClient;
 import client.servers.clients.models.galaxy.World;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -28,21 +27,32 @@ public class WorldComponent extends AnchorPane {
     private Label onlineLabel;
     @FXML
     private Label yearLabel;
+    @FXML
+    private ImageView eclipsedImage;
+    @FXML
+    private Label statusLabel;
 
     public WorldComponent(World world) {
+        this.setId("world-pane");
         this.worldNameLabel = new Label();
         this.populationLabel = new Label();
         this.investorLabel = new Label();
         this.onlineLabel = new Label();
+        this.yearLabel = new Label();
+        this.statusLabel = new Label();
 
         URL worldUrl = getClass().getResource("/worlds/" + world.getImage());
+        URL eclipseUrl = getClass().getResource("/worlds/eclipsed.png");
         URL cssUrl = getClass().getResource("/fxml/css/style.css");
 
         setWorldName(world.getName());
         setWorldImage(worldUrl);
+        setEclipsedImage(eclipseUrl);
         setPopulation(String.valueOf(world.getPopulation()));
         setInvestors(String.valueOf(world.getInvestors()));
         setOnline(String.valueOf(world.getOnline()));
+        setYear(String.valueOf(world.getDate()));
+        setStatus(world.getEclipsed());
 
         this.maxHeight(-1);
         this.maxWidth(-1);
@@ -52,15 +62,6 @@ public class WorldComponent extends AnchorPane {
         this.prefWidth(354);
         this.getStyleClass().add("bg-gray");
         this.getStylesheets().add(cssUrl.toString());
-
-        this.worldNameLabel.setWrapText(true);
-        this.worldNameLabel.setTextAlignment(TextAlignment.CENTER);
-       // this.worldNameLabel.setContentDisplay(ContentDisplay.CENTER);
-        this.worldNameLabel.setLayoutX(12);
-        this.worldNameLabel.setLayoutY(27);
-        this.worldNameLabel.prefHeight(33);
-        this.worldNameLabel.prefWidth(327);
-        this.worldNameLabel.getStyleClass().add("world-title");
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
@@ -75,12 +76,28 @@ public class WorldComponent extends AnchorPane {
         this.worldImage.pickOnBoundsProperty().set(true);
         this.worldImage.preserveRatioProperty().set(true);
         this.worldImage.setEffect(dropShadow);
+
+        if (world.getEclipsed()) {
+            this.eclipsedImage.fitHeightProperty().set(150);
+            this.eclipsedImage.fitWidthProperty().set(200);
+            this.eclipsedImage.setLayoutX(101);
+            this.eclipsedImage.setLayoutY(75);
+            this.eclipsedImage.pickOnBoundsProperty().set(true);
+            this.eclipsedImage.preserveRatioProperty().set(true);
+            this.eclipsedImage.setEffect(dropShadow);
+            this.worldImage.toBack();
+            this.eclipsedImage.toFront();
+        }
+
+        this.worldNameLabel.setWrapText(true);
+        this.worldNameLabel.setLayoutY(235);
+        this.worldNameLabel.getStyleClass().add("world-title");
         
         Label populationLabelLabel = new Label();
         populationLabelLabel.alignmentProperty().set(Pos.TOP_LEFT);
         populationLabelLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
         populationLabelLabel.setLayoutX(90);
-        populationLabelLabel.setLayoutY(249);
+        populationLabelLabel.setLayoutY(269);
         populationLabelLabel.setPrefHeight(23);
         populationLabelLabel.setPrefWidth(87);
         populationLabelLabel.setText("Population");
@@ -89,7 +106,7 @@ public class WorldComponent extends AnchorPane {
         this.populationLabel.alignmentProperty().set(Pos.TOP_LEFT);
         this.populationLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
         this.populationLabel.setLayoutX(177);
-        this.populationLabel.setLayoutY(249);
+        this.populationLabel.setLayoutY(269);
         this.populationLabel.setPrefHeight(23);
         this.populationLabel.setPrefWidth(95);
         this.populationLabel.getStyleClass().add("world");
@@ -98,7 +115,7 @@ public class WorldComponent extends AnchorPane {
         investorsLabelLabel.alignmentProperty().set(Pos.TOP_LEFT);
         investorsLabelLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
         investorsLabelLabel.setLayoutX(100);
-        investorsLabelLabel.setLayoutY(272);
+        investorsLabelLabel.setLayoutY(292);
         investorsLabelLabel.setPrefHeight(23);
         investorsLabelLabel.setPrefWidth(95);
         investorsLabelLabel.setText("Investors");
@@ -107,7 +124,7 @@ public class WorldComponent extends AnchorPane {
         this.investorLabel.alignmentProperty().set(Pos.TOP_LEFT);
         this.investorLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
         this.investorLabel.setLayoutX(177);
-        this.investorLabel.setLayoutY(272);
+        this.investorLabel.setLayoutY(292);
         this.investorLabel.setPrefHeight(23);
         this.investorLabel.setPrefWidth(95);
         this.investorLabel.getStyleClass().add("world");
@@ -116,7 +133,7 @@ public class WorldComponent extends AnchorPane {
         onlineLabelLabel.alignmentProperty().set(Pos.TOP_LEFT);
         onlineLabelLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
         onlineLabelLabel.setLayoutX(118);
-        onlineLabelLabel.setLayoutY(295);
+        onlineLabelLabel.setLayoutY(315);
         onlineLabelLabel.setPrefHeight(23);
         onlineLabelLabel.setPrefWidth(52);
         onlineLabelLabel.setText("Online");
@@ -125,19 +142,62 @@ public class WorldComponent extends AnchorPane {
         this.onlineLabel.alignmentProperty().set(Pos.TOP_LEFT);
         this.onlineLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
         this.onlineLabel.setLayoutX(177);
-        this.onlineLabel.setLayoutY(295);
+        this.onlineLabel.setLayoutY(338);
         this.onlineLabel.setPrefHeight(23);
         this.onlineLabel.setPrefWidth(95);
         this.onlineLabel.getStyleClass().add("world");
 
+        Label yearLabelLabel = new Label();
+        yearLabelLabel.alignmentProperty().set(Pos.TOP_LEFT);
+        yearLabelLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
+        yearLabelLabel.setLayoutX(128);
+        yearLabelLabel.setLayoutY(338);
+        yearLabelLabel.setPrefHeight(23);
+        yearLabelLabel.setPrefWidth(52);
+        yearLabelLabel.setText("Year");
+        yearLabelLabel.getStyleClass().add("world");
+        
+        this.yearLabel.alignmentProperty().set(Pos.TOP_LEFT);
+        this.yearLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
+        this.yearLabel.setLayoutX(177);
+        this.yearLabel.setLayoutY(315);
+        this.yearLabel.setPrefHeight(23);
+        this.yearLabel.setPrefWidth(95);
+        this.yearLabel.getStyleClass().add("world");
+        
+        Label statusLabelLabel = new Label();
+        statusLabelLabel.alignmentProperty().set(Pos.TOP_LEFT);
+        statusLabelLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
+        statusLabelLabel.setLayoutX(68);
+        statusLabelLabel.setLayoutY(361);
+        statusLabelLabel.setPrefHeight(23);
+        statusLabelLabel.setPrefWidth(102);
+        statusLabelLabel.setText("World Status");
+        statusLabelLabel.getStyleClass().add("world");
+        
+        this.statusLabel.alignmentProperty().set(Pos.TOP_LEFT);
+        this.statusLabel.contentDisplayProperty().set(ContentDisplay.CENTER);
+        this.statusLabel.setLayoutX(177);
+        this.statusLabel.setLayoutY(361);
+        this.statusLabel.setPrefHeight(23);
+        this.statusLabel.setPrefWidth(145);
+        this.statusLabel.getStyleClass().add("world");
+
         this.getChildren().add(this.worldNameLabel);
         this.getChildren().add(this.worldImage);
+        if (world.getEclipsed()) {
+            this.getChildren().add(eclipsedImage);
+        }
         this.getChildren().add(populationLabelLabel);
         this.getChildren().add(this.populationLabel);
         this.getChildren().add(investorsLabelLabel);
         this.getChildren().add(this.investorLabel);
         this.getChildren().add(onlineLabelLabel);
         this.getChildren().add(this.onlineLabel);
+        this.getChildren().add(yearLabelLabel);
+        this.getChildren().add(this.yearLabel);
+        this.getChildren().add(statusLabelLabel);
+        this.getChildren().add(this.statusLabel);
     }
 
     public Label getWorldName() {
@@ -149,9 +209,13 @@ public class WorldComponent extends AnchorPane {
     }
 
     public void setWorldImage(URL worldImage) {
-        System.out.println(worldImage);
         Image worldImg = new Image(String.valueOf(worldImage));
         this.worldImage = new ImageView(worldImg);
+    }
+
+    public void setEclipsedImage(URL eclipsedImage) {
+        Image eclipse = new Image(String.valueOf(eclipsedImage));
+        this.eclipsedImage = new ImageView(eclipse);
     }
 
     public String getPopulation() {
@@ -183,6 +247,18 @@ public class WorldComponent extends AnchorPane {
     }
 
     public void setYear(String year) {
+        System.out.println(year);
         this.yearLabel.setText(year);
+    }
+
+    public void setStatus(boolean status) {
+        String message = status ? "ECLIPSED" : "ACCESSIBLE";
+        this.statusLabel.setText(message);
+
+        if (status) {
+            this.statusLabel.setStyle("-fx-text-fill: red!important;");
+        } else {
+            this.statusLabel.setStyle("-fx-text-fill: green!important;");
+        }
     }
 }

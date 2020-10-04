@@ -27,7 +27,8 @@ public class DirectoryClient {
                 "            \"interface\": \"123.123.123.123\",\n" +
                 "            \"interface_port\": 6000,\n" +
                 "            \"model\": \"234.234.234.234\",\n" +
-                "            \"model_direct_access_port\": 7000\n" +
+                "            \"model_direct_access_port\": 7000,\n" +
+                "            \"date\": 2160\n" +
                 "          }\n" +
                 "        ]\n" +
                 "      },\n" +
@@ -44,19 +45,21 @@ public class DirectoryClient {
                 "            \"interface\": \"123.123.123.123\",\n" +
                 "            \"interface_port\": 6000,\n" +
                 "            \"model\": \"234.234.234.234\",\n" +
-                "            \"model_direct_access_port\": 7000\n" +
+                "            \"model_direct_access_port\": 7000,\n" +
+                "            \"date\": 2160\n" +
                 "          },\n" +
                 "          {\n" +
                 "            \"name\": \"Angelicus\",\n" +
                 "            \"image\": \"world3.png\",\n" +
-                "            \"eclipsed\": false,\n" +
+                "            \"eclipsed\": true,\n" +
                 "            \"population\": 12340000,\n" +
                 "            \"investors\": 32,\n" +
                 "            \"online\": 6,\n" +
                 "            \"interface\": \"123.123.123.123\",\n" +
                 "            \"interface_port\": 6000,\n" +
                 "            \"model\": \"234.234.234.234\",\n" +
-                "            \"model_direct_access_port\": 7000\n" +
+                "            \"model_direct_access_port\": 7000,\n" +
+                "            \"date\": 2160\n" +
                 "          },\n" +
                 "          {\n" +
                 "            \"name\": \"Willow\",\n" +
@@ -68,7 +71,8 @@ public class DirectoryClient {
                 "            \"interface\": \"123.123.123.123\",\n" +
                 "            \"interface_port\": 6000,\n" +
                 "            \"model\": \"234.234.234.234\",\n" +
-                "            \"model_direct_access_port\": 7000\n" +
+                "            \"model_direct_access_port\": 7000,\n" +
+                "            \"date\": 2160\n" +
                 "          }\n" +
                 "        ]\n" +
                 "      },\n" +
@@ -85,7 +89,8 @@ public class DirectoryClient {
                 "            \"interface\": \"123.123.123.123\",\n" +
                 "            \"interface_port\": 6000,\n" +
                 "            \"model\": \"234.234.234.234\",\n" +
-                "            \"model_direct_access_port\": 7000\n" +
+                "            \"model_direct_access_port\": 7000,\n" +
+                "            \"date\": 2160\n" +
                 "          }\n" +
                 "        ]\n" +
                 "      }\n" +

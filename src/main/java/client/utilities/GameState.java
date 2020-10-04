@@ -7,4 +7,6 @@ public enum GameState {
     GALAXY,
     MAP,
     INTRO_CONFIG,
+    WORLD_LOGON,
+    CREATE_COMPANY,
 }

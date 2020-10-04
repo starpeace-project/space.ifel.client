@@ -18,12 +18,12 @@
                   <Image url="@../logos/starpeace-logo.png" />
                </image>
             </ImageView>
-            <Button layoutX="320.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#goLogin" prefHeight="53.0" prefWidth="137.0" text="Login">
+            <Button layoutX="320.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#goLogin" prefHeight="53.0" prefWidth="137.0" text="Login" onMousePressed="#buttonClick">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button layoutX="480.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#doRegister" prefHeight="53.0" prefWidth="137.0" text="Register">
+            <Button layoutX="480.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#doRegister" prefHeight="53.0" prefWidth="137.0" text="Register" onMousePressed="#buttonClick">
                <font>
                   <Font size="24.0" />
                </font>
@@ -31,17 +31,17 @@
             <Label fx:id="registerAliasErrorLabel" layoutX="320.0" layoutY="200.0" prefHeight="17.0" prefWidth="298.0" textFill="RED" />
             <Label fx:id="registerEmailErrorLabel" layoutX="320.0" layoutY="300.0" prefHeight="17.0" prefWidth="298.0" textFill="RED" />
             <Label fx:id="registerGeneralErrorLabel" layoutX="300.0" layoutY="448.0" prefHeight="17.0" prefWidth="298.0" textFill="RED" />
-            <TextField fx:id="registerAliasTextField" layoutX="320.0" layoutY="140.0" prefHeight="60.0" prefWidth="298.0" promptText="Player Alias" styleClass="transparent" stylesheets="@css/style.css">
+            <TextField fx:id="registerAliasTextField" layoutX="320.0" layoutY="140.0" prefHeight="60.0" prefWidth="298.0" promptText="Player Alias" styleClass="transparent" stylesheets="@css/style.css" onKeyReleased="#validateAlias">
                <font>
                   <Font size="24.0" />
                </font>
             </TextField>
-            <TextField fx:id="registerEmailTextField" layoutX="320.0" layoutY="240.0" prefHeight="60.0" prefWidth="298.0" promptText="Email Address" stylesheets="@css/style.css">
+            <TextField fx:id="registerEmailTextField" layoutX="320.0" layoutY="240.0" prefHeight="60.0" prefWidth="298.0" promptText="Email Address" stylesheets="@css/style.css" onKeyReleased="#validateEmail">
                <font>
                   <Font size="24.0" />
                </font>
             </TextField>
-            <ImageView fx:id="cog" fitHeight="40.0" fitWidth="40.0" layoutX="776.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true"  styleClass="highlight">
+            <ImageView fx:id="cog" fitHeight="40.0" fitWidth="40.0" layoutX="776.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true"  styleClass="highlight" onMouseClicked="#configClick">
                <image>
                   <Image url="@../logos/cog.png" />
                </image>

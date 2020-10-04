@@ -2,6 +2,8 @@ package client.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class Config implements ClientConfig {
     @JsonProperty("intro_music")
     public void setIntroMusic(boolean introMusic) {
@@ -58,4 +60,13 @@ public class Config implements ClientConfig {
     }
 
     public double introMusicVolume;
+
+    @JsonProperty("quick_logons")
+    public List<QuickLogon> getQuickLogons() {
+        return this.quick_logons;
+    }
+    public void setQuickLogons(List<QuickLogon> quick_logons) {
+        this.quick_logons = quick_logons;
+    }
+    List<QuickLogon> quick_logons;
 }

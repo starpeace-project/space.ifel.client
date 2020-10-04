@@ -10,6 +10,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -19,7 +20,7 @@ public class IntroConfigController {
 
     private MediaPlayer mediaPlayer;
     private final Media introMusic = new Media(GameClient.class.getResource("/sound/bensound-newdawn.mp3").toString());
-    private final AudioClip beeper = new AudioClip(GameClient.class.getResource("/sound/key_beep.wav").toString());
+    private AudioClip beeper = new AudioClip(GameClient.class.getResource("/sound/key_beep.wav").toString());
 
     public IntroConfigController() {
         instance = this;
@@ -30,6 +31,11 @@ public class IntroConfigController {
         if (config.getIntroMusic()) {
             mediaPlayer.setAutoPlay(true);
         }
+
+        mediaPlayer.setOnEndOfMedia(() -> {
+            mediaPlayer.seek(Duration.ZERO);
+            mediaPlayer.play();
+        });
     }
 
     @FXML
@@ -40,6 +46,8 @@ public class IntroConfigController {
     private CheckBox introMusicCheckbox;
     @FXML
     private CheckBox beeperCheckbox;
+    @FXML
+    private CheckBox quickLogon;
     @FXML
     private Button closeButton;
 
@@ -62,13 +70,25 @@ public class IntroConfigController {
         introMusicCheckbox.setSelected(config.getIntroMusic());
 
         introMusicCheckbox.setOnAction(event -> {
+            System.out.println("Toggling Intro Music to " + !config.getIntroMusic());
             toggleIntroMusic();
         });
 
         beeperCheckbox.setSelected(config.getKeyBeeps());
 
         beeperCheckbox.setOnAction(event -> {
+            System.out.println("Toggling Key Beeps to " + !config.getKeyBeeps());
             toggleIntroKeyBeeps();
+        });
+
+        quickLogon.setSelected(config.getQuickLogon());
+
+        quickLogon.setOnAction(event -> {
+            try {
+                toggleQuickLogon();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         closeButton.setOnMouseClicked(event -> {
@@ -86,6 +106,7 @@ public class IntroConfigController {
         if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
             mediaPlayer.stop();
         } else {
+
             mediaPlayer.play();
         }
     }
@@ -93,14 +114,26 @@ public class IntroConfigController {
     @FXML
     private void toggleIntroKeyBeeps() {
         config.setKeyBeeps(!config.getKeyBeeps());
-        if (beeper.getVolume() >= 0) {
+
+        if (beeper.getVolume() != 0) {
             beeper.setVolume(0);
         } else {
             beeper.setVolume(config.getBeeperVolume());
         }
     }
 
+    @FXML
+    private void toggleQuickLogon() throws IOException {
+        config.setQuickLogon(!config.getQuickLogon());
+        GameClient.getInstance().refreshLoginRoot();
+    }
+
     public void beep() {
         beeper.play();
+    }
+
+    @FXML
+    private void buttonClick() {
+        beep();
     }
 }
