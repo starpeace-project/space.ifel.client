@@ -30,6 +30,7 @@ public class GalaxyController {
             FlowPane flowPane = new FlowPane();
             for (World world : quadrant.getWorlds()) {
                 WorldComponent worldComponent = new WorldComponent(world);
+                worldComponent.setOnMouseClicked(event -> worldSelected(quadrant, world));
                 flowPane.getChildren().add(worldComponent);
             }
             newTab.setContent(flowPane);
@@ -38,5 +39,9 @@ public class GalaxyController {
     }
     public static GalaxyController getInstance() {
         return instance;
+    }
+
+    public void worldSelected(Quadrant quadrant, World world) {
+        GameClient.getInstance().setSelectedWorld(quadrant, world);
     }
 }

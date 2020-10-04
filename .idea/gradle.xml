@@ -5,6 +5,16 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$USER_HOME$/IdeaProjects/space.ifel.core" />
+        <option name="gradleHome" value="/usr/local/Cellar/gradle/6.6.1/libexec" />
+        <option name="modules">
+          <set>
+            <option value="$USER_HOME$/IdeaProjects/space.ifel.core" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/../engine" />
         <option name="gradleHome" value="/usr/local/Cellar/gradle/6.6.1/libexec" />
         <option name="modules">
@@ -32,6 +42,16 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/../map" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/../../legacy" />
+        <option name="gradleHome" value="/usr/local/Cellar/gradle/6.6.1/libexec" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/../../legacy" />
           </set>
         </option>
       </GradleProjectSettings>

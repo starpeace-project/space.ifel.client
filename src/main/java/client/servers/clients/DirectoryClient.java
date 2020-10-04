@@ -5,8 +5,16 @@ import client.servers.clients.models.factories.UserFactory;
 import client.servers.clients.models.galaxy.Galaxy;
 import client.servers.clients.models.user.User;
 
-public class DirectoryClient {
-    public DirectoryClient() {
+import java.net.InetAddress;
+
+public class DirectoryClient implements IDirectoryClient {
+    private final InetAddress serverAddress;
+    private final int port = 1111;
+    private int callNumber;
+    private int directoryObjectId;
+    private int sessionId;
+    public DirectoryClient(InetAddress serverAddress) {
+        this.serverAddress = serverAddress;
     }
 
     public Galaxy getGalaxy() throws Exception {
@@ -134,5 +142,15 @@ public class DirectoryClient {
 
     public boolean checkPlayerAlias(String alias) {
         return !alias.equals("dodgerid");
+    }
+
+    @Override
+    public void beginSession() throws Exception {
+
+    }
+
+    @Override
+    public void endSession() {
+
     }
 }

@@ -65,8 +65,32 @@ public class Config implements ClientConfig {
     public List<QuickLogon> getQuickLogons() {
         return this.quick_logons;
     }
+
     public void setQuickLogons(List<QuickLogon> quick_logons) {
         this.quick_logons = quick_logons;
     }
+
     List<QuickLogon> quick_logons;
+
+    @JsonProperty("directory_server")
+    public String getDirectoryServer() {
+        return this.directoryServer;
+    }
+
+    public void setDirectoryServer(String directoryServer) {
+        this.directoryServer = directoryServer;
+    }
+
+    public String directoryServer;
+
+    @JsonProperty("legacy_mode")
+    public boolean getLegacyMode() {
+        return legacyMode;
+    }
+
+    public void setLegacyMode(boolean legacyMode) {
+        this.legacyMode = legacyMode;
+    }
+
+    public boolean legacyMode;
 }

@@ -1,23 +1,25 @@
 package client;
 
 import client.configuration.ClientConfig;
+import client.configuration.Config;
+import client.configuration.ConfigFactory;
 import client.configuration.ConfigManager;
-import client.servers.clients.DirectoryClient;
-import client.servers.clients.models.WorldComponent;
-import client.servers.clients.models.galaxy.Galaxy;
+import client.legacy.servers.clients.DirectoryClient;
+import client.servers.clients.DirectoryClientFactory;
+import client.servers.clients.IDirectoryClient;
+import client.servers.clients.TcpClient;
 import client.servers.clients.models.galaxy.Quadrant;
 import client.servers.clients.models.galaxy.World;
+import client.utilities.FileUtils;
 import client.utilities.GameState;
 import javafx.application.Preloader;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -36,12 +38,18 @@ public class GameClient extends Preloader {
     private Parent createCompanyRoot;
 
     private ConfigManager configManager = new ConfigManager("src/main/resources/config");
-    private DirectoryClient dirClient = new DirectoryClient();
+    private Config config = (Config) ConfigManager.get("config");
+    private IDirectoryClient dirClient;
 
     private Boolean loggedIn = false;
 
     private GameState state;
     private GameState lastState;
+
+    private Quadrant selectedQuadrant;
+    private World selectedWorld;
+
+    private TcpClient tcpClient;
 
 
     public static void main(String[] args) {
@@ -51,18 +59,31 @@ public class GameClient extends Preloader {
 
     public GameClient() throws Exception {
         instance = this;
+        System.out.println("Registering game client shutdown hook.");
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Shutting down writing configs to disk.");
+            try {
+                this.dirClient.endSession();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }));
     }
 
     @Override
     public void init() throws Exception {
+        this.dirClient = DirectoryClientFactory.getClient(config);
+        this.dirClient.beginSession();
 
 
-        loadSceneRoots();
 
         for (int i = 0; i < 50000; i++) {
             double progress = (100 * i) / 50000;
             notifyPreloader(new Preloader.ProgressNotification(progress));
         }
+        System.exit(0);
+        loadSceneRoots();
+
     }
 
     @Override
@@ -173,11 +194,17 @@ public class GameClient extends Preloader {
         return instance;
     }
 
-    public DirectoryClient getDirectory() {
+    public IDirectoryClient getDirectory() {
         return dirClient;
     }
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public void setSelectedWorld(Quadrant quadrant, World world) {
+        this.selectedQuadrant = quadrant;
+        this.selectedWorld = world;
+        setState(GameState.WORLD_LOGON);
     }
 }
