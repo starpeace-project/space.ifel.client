@@ -77,14 +77,16 @@ public class GameClient extends Preloader {
     @Override
     public void init() throws Exception {
         this.dirClient = DirectoryClientFactory.getClient(config);
+        notifyPreloader(new Preloader.ProgressNotification(10.0));
+
         this.dirClient.beginSession();
+        notifyPreloader(new Preloader.ProgressNotification(20.0));
+
         this.galaxy = this.dirClient.getGalaxy();
+        notifyPreloader(new Preloader.ProgressNotification(60.0));
 
         loadSceneRoots();
-        for (int i = 0; i < 50000; i++) {
-            double progress = (100 * i) / 50000;
-            notifyPreloader(new Preloader.ProgressNotification(progress));
-        }
+        notifyPreloader(new Preloader.ProgressNotification(100.0));
     }
 
     @Override

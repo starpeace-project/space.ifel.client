@@ -30,7 +30,13 @@ public class GalaxyController {
             FlowPane flowPane = new FlowPane();
             for (World world : quadrant.getWorlds()) {
                 WorldComponent worldComponent = new WorldComponent(world);
-                worldComponent.setOnMouseClicked(event -> worldSelected(quadrant, world));
+                worldComponent.setOnMouseClicked(event -> {
+                    try {
+                        worldSelected(quadrant, world);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
                 flowPane.getChildren().add(worldComponent);
             }
             newTab.setContent(flowPane);
@@ -41,7 +47,7 @@ public class GalaxyController {
         return instance;
     }
 
-    public void worldSelected(Quadrant quadrant, World world) {
+    public void worldSelected(Quadrant quadrant, World world) throws Exception {
         GameClient.getInstance().setSelectedWorld(quadrant, world);
     }
 }

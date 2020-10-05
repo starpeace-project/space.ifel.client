@@ -21,8 +21,7 @@ public class InterfaceClient implements IInterfaceClient {
     }
 
     @Override
-    public boolean login(String username, String password) throws Exception {
-        return false;
+    public void login(String username, String password) throws Exception {
     }
 
     @Override

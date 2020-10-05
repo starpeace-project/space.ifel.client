@@ -2,6 +2,7 @@ package client.legacy.servers.clients.commands;
 
 import client.servers.clients.TcpClient;
 import client.servers.clients.models.WorldServerDetails;
+import client.utilities.RegexUtils;
 
 public class GetWorldServerDetails {
     public WorldServerDetails getWorldServerDetails(TcpClient interfaceServer) throws Exception {
@@ -12,63 +13,47 @@ public class GetWorldServerDetails {
         String worldName = interfaceServer.send("C " + worldCallNumber + " sel " + interfaceServer.getObjectId() + " get WorldName;");
         worldName = worldName.replace("A" + worldCallNumber + " WorldName=\"$", "");
         worldName = worldName.replace("\"", "");
-        serverDetails.setWorldName(worldName);
+        serverDetails.setWorldName(RegexUtils.extractString(worldName));
 
         // C 23 sel 31287108 get WorldURL;A23 WorldURL="$http://willow.starpeaceonline.com/Five/";
         int worldUrlCallNumber = interfaceServer.getCallCounter();
         String worldUrl = interfaceServer.send("C " + worldUrlCallNumber + " sel " + interfaceServer.getObjectId() + " get WorldURL;");
-        worldUrl = worldUrl.replace("A" + worldCallNumber + " WorldUrl=\"$", "");
-        worldUrl = worldUrl.replace("\"", "");
-        serverDetails.setWorldUrl(worldUrl);
+        serverDetails.setWorldUrl(RegexUtils.extractString(worldUrl));
 
         // C 24 sel 31287108 get DAAddr;A24 DAAddr="$78.46.87.219";
         int daAddrCallNumber = interfaceServer.getCallCounter();
         String daAddr = interfaceServer.send("C " + daAddrCallNumber + " sel " + interfaceServer.getObjectId() + " get DAAddr;");
-        daAddr = daAddr.replace("A" + daAddrCallNumber + " DAAddr=\"$", "");
-        daAddr = daAddr.replace("\"", "");
-        serverDetails.setDaAddress(daAddr);
+        serverDetails.setDaAddress(RegexUtils.extractString(daAddr));
 
         //  C 25 sel 31287108 get DALockPort;A25 DALockPort="#7001";
         int daLockPortCallNumber = interfaceServer.getCallCounter();
         String daLockPort = interfaceServer.send("C " + daLockPortCallNumber + " sel " + interfaceServer.getObjectId() + " get DALockPort;");
-        daLockPort = daLockPort.replace("A" + daLockPortCallNumber + " DALockPort=\"#", "");
-        daLockPort = daLockPort.replace("\"", "");
-        serverDetails.setDaPort(Integer.parseInt(daLockPort));
+        serverDetails.setDaPort(RegexUtils.extractInteger(daLockPort));
 
         // C 26 sel 31287108 get MailAddr;A26 MailAddr="$78.46.87.219";
         int mailAddrCallNumber = interfaceServer.getCallCounter();
         String mailAddr = interfaceServer.send("C " + mailAddrCallNumber + " sel " + interfaceServer.getObjectId() + " get MailAddr;");
-        mailAddr = mailAddr.replace("A" + mailAddrCallNumber + " MailAddr=\"$", "");
-        mailAddr = mailAddr.replace("\"", "");
-        serverDetails.setMailAddress(mailAddr);
+        serverDetails.setMailAddress(RegexUtils.extractString(mailAddr));
 
         // C 27 sel 31287108 get MailPort;A27 MailPort="#10000";
         int mailPortCallNumber = interfaceServer.getCallCounter();
         String mailPort = interfaceServer.send("C " + mailPortCallNumber + " sel " + interfaceServer.getObjectId() + " get MailPort;");
-        mailPort = mailPort.replace("A" + mailPortCallNumber + " MailPort=\"#", "");
-        mailPort = mailPort.replace("\"", "");
-        serverDetails.setMailPort(Integer.parseInt(mailPort));
+        serverDetails.setMailPort(RegexUtils.extractInteger(mailPort));
 
         // C 28 sel 31287108 get WorldXSize;A28 WorldXSize="#1000";
         int worldXSizeCallNumber = interfaceServer.getCallCounter();
         String worldXSize = interfaceServer.send("C " + worldXSizeCallNumber + " sel " + interfaceServer.getObjectId() + " get WorldXSize;");
-        worldXSize = worldXSize.replace("A" + worldXSizeCallNumber + " WorldXSize=\"#", "");
-        worldXSize = worldXSize.replace("\"", "");
-        serverDetails.setWorldXSize(Integer.parseInt(worldXSize));
+        serverDetails.setWorldXSize(RegexUtils.extractInteger(worldXSize));
 
         // C 29 sel 31287108 get WorldYSize;A29 WorldYSize="#1000";
         int worldYSizeCallNumber = interfaceServer.getCallCounter();
         String worldYSize = interfaceServer.send("C " + worldYSizeCallNumber + " sel " + interfaceServer.getObjectId() + " get WorldYSize;");
-        worldYSize = worldYSize.replace("A" + worldYSizeCallNumber + " WorldYSize=\"#", "");
-        worldYSize = worldYSize.replace("\"", "");
-        serverDetails.setWorldYSize(Integer.parseInt(worldYSize));
+        serverDetails.setWorldYSize(RegexUtils.extractInteger(worldYSize));
 
         // C 30 sel 31287108 get WorldSeason;A30 WorldSeason="#3";
         int worldSeasonCallNumber = interfaceServer.getCallCounter();
         String worldSeason = interfaceServer.send("C " + worldSeasonCallNumber + " sel " + interfaceServer.getObjectId() + " get WorldSeason;");
-        worldSeason = worldSeason.replace("A" + worldYSizeCallNumber + " WorldSeason=\"#", "");
-        worldSeason = worldSeason.replace("\"", "");
-        serverDetails.setWorldYSize(Integer.parseInt(worldSeason));
+        serverDetails.setWorldYSize(RegexUtils.extractInteger(worldSeason));
 
         return serverDetails;
     }

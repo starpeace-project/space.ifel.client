@@ -41,14 +41,12 @@ public class TcpClient {
         System.out.println("Sending message: " + message);
         output.println(message);
 
-        System.out.println("Returning response");
-
         int ch;
         StringBuilder sb = new StringBuilder();
         while ((ch = input.read()) >= 0 && ch != ';') {
             sb.append((char)ch);
         }
-
+        System.out.println("Returning response:" + sb.toString());
         callCounter++;
         return sb.toString();
     }
