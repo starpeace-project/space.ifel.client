@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 public class DirectoryClient implements IDirectoryClient {
-    private int sessionId;
-
     private final TcpClient dirClient;
 
     public DirectoryClient(InetAddress serverAddress) throws IOException {
@@ -18,20 +16,20 @@ public class DirectoryClient implements IDirectoryClient {
     }
 
     public void beginSession() throws Exception {
-        int directoryObjectId = new IdofDirectoryServer().getObjectId(dirClient);
-        System.out.println("Directory Server Object Id: " + directoryObjectId);
-        sessionId = new RdoOpenSession().getSessionId(dirClient, directoryObjectId);
-        System.out.println("Directory Server Session Id: " + sessionId);
+        this.dirClient.setObjectId(new Idof().getObjectId(dirClient, "DirectoryServer"));
+        System.out.println("Directory Server Object Id: " + dirClient.getObjectId());
+        this.dirClient.setSessionId(new RdoOpenSession().getSessionId(dirClient));
+        System.out.println("Directory Server Session Id: " + dirClient.getSessionId());
     }
 
     @Override
     public void endSession() throws Exception {
-        new RdoEndSession().endSession(dirClient, sessionId);
+        new RdoEndSession().endSession(dirClient);
     }
 
     @Override
     public Galaxy getGalaxy() throws Exception {
-        return new GetGalaxy().getGalaxy(dirClient, sessionId);
+        return new GetGalaxy().getGalaxy(dirClient);
     }
 
     @Override
@@ -41,6 +39,6 @@ public class DirectoryClient implements IDirectoryClient {
 
     @Override
     public boolean login(String username, String password) throws Exception {
-        return new RdoLogonUser().logonUser(dirClient, sessionId, username, password);
+        return new RdoLogonUser().logonUser(dirClient, username, password);
     }
 }

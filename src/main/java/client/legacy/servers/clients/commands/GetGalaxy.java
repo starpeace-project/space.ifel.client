@@ -12,10 +12,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GetGalaxy {
-    public Galaxy getGalaxy(TcpClient dirClient, int sessionId) throws Exception {
-        String america = dirClient.send(getRequestString(dirClient, sessionId, "America"));
-        String europe = dirClient.send(getRequestString(dirClient, sessionId, "Europe"));
-        String asia = dirClient.send(getRequestString(dirClient, sessionId, "Asia"));
+    public Galaxy getGalaxy(TcpClient dirClient) throws Exception {
+        String america = dirClient.send(getRequestString(dirClient, "America"));
+        String europe = dirClient.send(getRequestString(dirClient, "Europe"));
+        String asia = dirClient.send(getRequestString(dirClient, "Asia"));
 
         Galaxy galaxy = new Galaxy();
 
@@ -30,8 +30,8 @@ public class GetGalaxy {
         return galaxy;
     }
 
-    private String getRequestString(TcpClient dirClient, int sessionId, String area) {
-        return "C " + dirClient.getCallCounter() + " sel " + sessionId + " call RDOQueryKey \"^\" \"%Root/Areas/" + area + "/Worlds\",\"%General/Population\n" +
+    private String getRequestString(TcpClient dirClient, String area) {
+        return "C " + dirClient.getCallCounter() + " sel " + dirClient.getSessionId() + " call RDOQueryKey \"^\" \"%Root/Areas/" + area + "/Worlds\",\"%General/Population\n" +
                 "General/Investors\n" +
                 "General/Online\n" +
                 "General/Date\n" +
@@ -53,9 +53,6 @@ public class GetGalaxy {
         if (matcher.find()) {
             resultCount = Integer.parseInt(matcher.group(1));
         }
-
-        pattern = null;
-        matcher = null;
 
         Quadrant quadrant = new Quadrant();
         quadrant.setName(quadrantName);

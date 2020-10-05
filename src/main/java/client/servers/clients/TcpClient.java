@@ -12,6 +12,7 @@ public class TcpClient {
 
     private int callCounter = 0;
     private int sessionId = 0;
+    private int objectId = 0;
 
     public TcpClient(InetAddress server, int port) {
         this.server = server;
@@ -66,5 +67,13 @@ public class TcpClient {
 
     public static TcpClient getInstance() {
         return instance;
+    }
+
+    public int getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(int objectId) {
+        this.objectId = objectId;
     }
 }

@@ -5,12 +5,12 @@ import client.servers.clients.TcpClient;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class IdofDirectoryServer {
-    public int getObjectId(TcpClient dirClient) throws Exception {
-        int callNumber = dirClient.getCallCounter();
-        String message = "C " + callNumber + " idof \"DirectoryServer\";";
+public class Idof {
+    public int getObjectId(TcpClient tcpClient, String serverType) throws Exception {
+        int callNumber = tcpClient.getCallCounter();
+        String message = "C " + callNumber + " idof \"" + serverType + "\";";
 
-        String response = dirClient.send(message);
+        String response = tcpClient.send(message);
 
         String regex = "objid=\"(\\d+?)\"";
         Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);

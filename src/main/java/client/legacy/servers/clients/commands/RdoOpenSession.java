@@ -6,9 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RdoOpenSession {
-    public int getSessionId(TcpClient dirClient, int directoryServerObjectId) throws Exception {
+    public int getSessionId(TcpClient dirClient) throws Exception {
         int callNumber = dirClient.getCallCounter();
-        String message = "C " + callNumber + " sel " + directoryServerObjectId + " get RDOOpenSession;";
+        String message = "C " + callNumber + " sel " + dirClient.getObjectId() + " get RDOOpenSession;";
 
         String response = dirClient.send(message);
 

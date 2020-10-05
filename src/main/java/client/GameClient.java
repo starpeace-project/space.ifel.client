@@ -5,9 +5,8 @@ import client.configuration.Config;
 import client.configuration.ConfigFactory;
 import client.configuration.ConfigManager;
 import client.legacy.servers.clients.DirectoryClient;
-import client.servers.clients.DirectoryClientFactory;
-import client.servers.clients.IDirectoryClient;
-import client.servers.clients.TcpClient;
+import client.servers.clients.*;
+import client.servers.clients.models.WorldServerDetails;
 import client.servers.clients.models.galaxy.Galaxy;
 import client.servers.clients.models.galaxy.Quadrant;
 import client.servers.clients.models.galaxy.World;
@@ -41,8 +40,11 @@ public class GameClient extends Preloader {
     private ConfigManager configManager = new ConfigManager("src/main/resources/config");
     private Config config = (Config) ConfigManager.get("config");
     private IDirectoryClient dirClient;
+    private IInterfaceClient interfaceClient;
 
     private Boolean loggedIn = false;
+    private String username;
+    private String password;
 
     private GameState state;
     private GameState lastState;
@@ -50,8 +52,7 @@ public class GameClient extends Preloader {
     private Galaxy galaxy;
     private Quadrant selectedQuadrant;
     private World selectedWorld;
-
-    private TcpClient tcpClient;
+    private WorldServerDetails worldServerDetails;
 
 
     public static void main(String[] args) {
@@ -66,6 +67,7 @@ public class GameClient extends Preloader {
             System.out.println("Shutting down writing configs to disk.");
             try {
                 this.dirClient.endSession();
+                this.interfaceClient.endSession();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -172,10 +174,6 @@ public class GameClient extends Preloader {
         applicationStage.show();
     }
 
-    private ClientConfig getConfig() throws Exception {
-        return ConfigManager.get("config");
-    }
-
     private void loadSceneRoots() throws IOException {
         loginRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/login.fxml"));
         registerRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/register.fxml"));
@@ -200,15 +198,26 @@ public class GameClient extends Preloader {
     public boolean logIn(String username, String password) throws Exception {
         if (dirClient.login(username, password)) {
             this.loggedIn = true;
+            this.username = username;
+            this.password = password;
             setState(GameState.GALAXY);
         }
 
         return this.loggedIn;
     }
 
-    public void setSelectedWorld(Quadrant quadrant, World world) {
+    public void setSelectedWorld(Quadrant quadrant, World world) throws Exception {
         this.selectedQuadrant = quadrant;
         this.selectedWorld = world;
+
+        if (this.interfaceClient != null) {
+            this.interfaceClient.endSession();
+        }
+
+        this.interfaceClient = InterfaceClientFactory.getClient(config, world);
+        this.interfaceClient.beginSession();
+        this.worldServerDetails = this.interfaceClient.getWorldServerData(this.username, this.password);
+
         setState(GameState.WORLD_LOGON);
     }
 
