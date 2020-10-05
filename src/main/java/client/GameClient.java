@@ -8,6 +8,7 @@ import client.legacy.servers.clients.DirectoryClient;
 import client.servers.clients.DirectoryClientFactory;
 import client.servers.clients.IDirectoryClient;
 import client.servers.clients.TcpClient;
+import client.servers.clients.models.galaxy.Galaxy;
 import client.servers.clients.models.galaxy.Quadrant;
 import client.servers.clients.models.galaxy.World;
 import client.utilities.FileUtils;
@@ -46,6 +47,7 @@ public class GameClient extends Preloader {
     private GameState state;
     private GameState lastState;
 
+    private Galaxy galaxy;
     private Quadrant selectedQuadrant;
     private World selectedWorld;
 
@@ -74,20 +76,17 @@ public class GameClient extends Preloader {
     public void init() throws Exception {
         this.dirClient = DirectoryClientFactory.getClient(config);
         this.dirClient.beginSession();
+        this.galaxy = this.dirClient.getGalaxy();
 
-
-
+        loadSceneRoots();
         for (int i = 0; i < 50000; i++) {
             double progress = (100 * i) / 50000;
             notifyPreloader(new Preloader.ProgressNotification(progress));
         }
-        System.exit(0);
-        loadSceneRoots();
-
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         applicationStage = primaryStage;
         applicationStage.setTitle(messages.getString("application_title"));
         applicationStage.setWidth(1024);
@@ -198,13 +197,22 @@ public class GameClient extends Preloader {
         return dirClient;
     }
 
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
+    public boolean logIn(String username, String password) throws Exception {
+        if (dirClient.login(username, password)) {
+            this.loggedIn = true;
+            setState(GameState.GALAXY);
+        }
+
+        return this.loggedIn;
     }
 
     public void setSelectedWorld(Quadrant quadrant, World world) {
         this.selectedQuadrant = quadrant;
         this.selectedWorld = world;
         setState(GameState.WORLD_LOGON);
+    }
+
+    public Galaxy getGalaxy() {
+        return this.galaxy;
     }
 }

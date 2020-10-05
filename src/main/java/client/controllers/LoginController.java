@@ -106,7 +106,7 @@ public class LoginController {
     }
 
     @FXML
-    private void doLogin() {
+    private void doLogin() throws Exception {
         emptyLoginErrorLabels();
 
         String value = "";
@@ -131,9 +131,9 @@ public class LoginController {
         // We are good to attempt login.
 
         //Fake login for now
-        GameClient.getInstance().setLoggedIn(true);
-
-        GameClient.getInstance().setState(GameState.GALAXY);
+        if (!GameClient.getInstance().logIn(value, loginPasswordTextField.getText())) {
+            loginGeneralErrorLabel.setText(messages.getString("invalid_login"));
+        }
     }
 
     @FXML

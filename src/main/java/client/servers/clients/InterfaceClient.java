@@ -10,7 +10,7 @@ public class InterfaceClient {
     private final int ifacePort;
 
     public InterfaceClient(World world) throws UnknownHostException {
-        this.ifaceAddress = InetAddress.getByName(world.getInterface());
+        this.ifaceAddress = InetAddress.getByName(world.getInterfaceIp());
         this.ifacePort = world.getInterfacePort();
     }
 }

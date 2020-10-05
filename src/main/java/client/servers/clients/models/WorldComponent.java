@@ -55,7 +55,7 @@ public class WorldComponent extends AnchorPane {
         setInvestors(String.valueOf(world.getInvestors()));
         setOnline(String.valueOf(world.getOnline()));
         setYear(String.valueOf(world.getDate()));
-        setStatus(world.getEclipsed());
+        setStatus(world.getRunning());
 
         this.maxHeight(-1);
         this.maxWidth(-1);
@@ -80,7 +80,7 @@ public class WorldComponent extends AnchorPane {
         this.worldImage.preserveRatioProperty().set(true);
         this.worldImage.setEffect(dropShadow);
 
-        if (world.getEclipsed()) {
+        if (!world.getRunning()) {
             this.eclipsedImage.fitHeightProperty().set(150);
             this.eclipsedImage.fitWidthProperty().set(200);
             this.eclipsedImage.setLayoutX(101);
@@ -188,7 +188,7 @@ public class WorldComponent extends AnchorPane {
 
         this.getChildren().add(this.worldNameLabel);
         this.getChildren().add(this.worldImage);
-        if (world.getEclipsed()) {
+        if (!world.getRunning()) {
             this.getChildren().add(eclipsedImage);
         }
         this.getChildren().add(populationLabelLabel);
@@ -255,10 +255,10 @@ public class WorldComponent extends AnchorPane {
     }
 
     public void setStatus(boolean status) {
-        String message = status ? "ECLIPSED" : "ACCESSIBLE";
+        String message = status ? "ACCESSIBLE" : "ECLIPSED";
         this.statusLabel.setText(message);
 
-        if (status) {
+        if (!status) {
             this.statusLabel.setStyle("-fx-text-fill: red!important;");
         } else {
             this.statusLabel.setStyle("-fx-text-fill: green!important;");

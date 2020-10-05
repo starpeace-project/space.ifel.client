@@ -1,8 +1,6 @@
 package client.legacy.servers.clients;
 
-import client.legacy.servers.clients.commands.IdofDirectoryServer;
-import client.legacy.servers.clients.commands.RdoEndSession;
-import client.legacy.servers.clients.commands.RdoOpenSession;
+import client.legacy.servers.clients.commands.*;
 import client.servers.clients.IDirectoryClient;
 import client.servers.clients.TcpClient;
 import client.servers.clients.models.galaxy.Galaxy;
@@ -33,11 +31,16 @@ public class DirectoryClient implements IDirectoryClient {
 
     @Override
     public Galaxy getGalaxy() throws Exception {
-        return null;
+        return new GetGalaxy().getGalaxy(dirClient, sessionId);
     }
 
     @Override
     public boolean checkPlayerAlias(String text) {
         return false;
+    }
+
+    @Override
+    public boolean login(String username, String password) throws Exception {
+        return new RdoLogonUser().logonUser(dirClient, sessionId, username, password);
     }
 }

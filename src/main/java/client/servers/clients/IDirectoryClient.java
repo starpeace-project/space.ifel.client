@@ -11,4 +11,6 @@ public interface IDirectoryClient {
     Galaxy getGalaxy() throws Exception;
 
     boolean checkPlayerAlias(String text);
+
+    boolean login(String username, String password) throws Exception;
 }

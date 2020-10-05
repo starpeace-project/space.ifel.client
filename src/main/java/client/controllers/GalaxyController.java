@@ -18,9 +18,9 @@ public class GalaxyController {
     @FXML
     TabPane galaxyTabPane;
 
-    public GalaxyController() throws Exception {
+    public GalaxyController() {
         instance = this;
-        galaxy = GameClient.getInstance().getDirectory().getGalaxy();
+        galaxy = GameClient.getInstance().getGalaxy();
     }
 
     public void initialize () {

@@ -25,16 +25,16 @@ public class World {
 
     String image;
 
-    @JsonProperty("eclipsed")
-    public boolean getEclipsed() {
-        return this.eclipsed;
+    @JsonProperty("running")
+    public boolean getRunning() {
+        return this.running;
     }
 
-    public void setEclipsed(boolean eclipsed) {
-        this.eclipsed = eclipsed;
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
-    boolean eclipsed;
+    boolean running;
 
     @JsonProperty("population")
     public int getPopulation() {
@@ -69,16 +69,16 @@ public class World {
 
     int online;
 
-    @JsonProperty("interface")
-    public String getInterface() {
-        return this.iface;
+    @JsonProperty("interface_ip")
+    public String getInterfaceIp() {
+        return this.interfaceIp;
     }
 
-    public void setInterface(String iface) {
-        this.iface = iface;
+    public void setInterfaceIp(String iface) {
+        this.interfaceIp = iface;
     }
 
-    String iface;
+    String interfaceIp;
 
     @JsonProperty("interface_port")
     public int getInterfacePort() {
@@ -91,27 +91,17 @@ public class World {
 
     int interfacePort;
 
-    @JsonProperty("model")
-    public String getModel() {
-        return this.model;
+
+    @JsonProperty("interface_url")
+    public String getInterfaceUrl() {
+        return interfaceUrl;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setInterfaceUrl(String interfaceUrl) {
+        this.interfaceUrl = interfaceUrl;
     }
 
-    String model;
-
-    @JsonProperty("model_direct_access_port")
-    public int getModelDirectAccessPort() {
-        return this.modelDirectAccessPort;
-    }
-
-    public void setModelDirectAccessPort(int modelDirectAccessPort) {
-        this.modelDirectAccessPort = modelDirectAccessPort;
-    }
-
-    int modelDirectAccessPort;
+    String interfaceUrl;
 
     @JsonProperty("date")
     public int getDate() {

@@ -145,6 +145,11 @@ public class DirectoryClient implements IDirectoryClient {
     }
 
     @Override
+    public boolean login(String username, String password) {
+        return false;
+    }
+
+    @Override
     public void beginSession() throws Exception {
 
     }
