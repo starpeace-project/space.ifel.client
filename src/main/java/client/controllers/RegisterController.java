@@ -64,7 +64,7 @@ public class RegisterController {
     }
 
     @FXML
-    private void configClick() {
+    private void configClick() throws IOException {
         IntroConfigController.getInstance().beep();
         GameClient.getInstance().setState(GameState.INTRO_CONFIG);
     }
@@ -95,7 +95,7 @@ public class RegisterController {
 
 
     @FXML
-    private void goLogin() {
+    private void goLogin() throws IOException {
         GameClient.getInstance().setState(GameState.LOGIN);
     }
 

@@ -4,7 +4,10 @@ import client.configuration.ClientConfig;
 import client.configuration.Config;
 import client.configuration.ConfigFactory;
 import client.configuration.ConfigManager;
+import client.controllers.WebViewController;
+import client.controllers.WorldLogonController;
 import client.legacy.servers.clients.DirectoryClient;
+import client.legacy.servers.clients.commands.GetCompanyList;
 import client.servers.clients.*;
 import client.servers.clients.models.WorldServerDetails;
 import client.servers.clients.models.galaxy.Galaxy;
@@ -12,6 +15,7 @@ import client.servers.clients.models.galaxy.Quadrant;
 import client.servers.clients.models.galaxy.World;
 import client.utilities.FileUtils;
 import client.utilities.GameState;
+import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +25,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -36,6 +41,7 @@ public class GameClient extends Preloader {
     private Parent introConfigRoot;
     private Parent worldLogonRoot;
     private Parent createCompanyRoot;
+    private Parent webViewRoot;
 
     private ConfigManager configManager = new ConfigManager("src/main/resources/config");
     private Config config = (Config) ConfigManager.get("config");
@@ -67,7 +73,6 @@ public class GameClient extends Preloader {
             System.out.println("Shutting down writing configs to disk.");
             try {
                 this.dirClient.endSession();
-                this.interfaceClient.endSession();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -90,7 +95,7 @@ public class GameClient extends Preloader {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         applicationStage = primaryStage;
         applicationStage.setTitle(messages.getString("application_title"));
         applicationStage.setWidth(1024);
@@ -103,7 +108,7 @@ public class GameClient extends Preloader {
         setState(GameState.LOGIN);
     }
 
-    public void setState(GameState newState) {
+    public void setState(GameState newState) throws IOException {
         this.lastState = state;
         this.state = newState;
 
@@ -143,12 +148,13 @@ public class GameClient extends Preloader {
         applicationStage.show();
     }
 
-    private void renderWorldLogon() {
+    private void renderWorldLogon() throws IOException {
+        worldLogonRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/world_logon.fxml"));
         applicationStage.getScene().setRoot(worldLogonRoot);
         applicationStage.show();
     }
 
-    public void restoreState() {
+    public void restoreState() throws IOException {
         setState(lastState);
     }
 
@@ -177,12 +183,19 @@ public class GameClient extends Preloader {
     }
 
     private void loadSceneRoots() throws IOException {
-        loginRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/login.fxml"));
-        registerRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/register.fxml"));
-        introConfigRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/intro_config.fxml"));
-        galaxyRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/galaxy.fxml"));
-        worldLogonRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/world_logon.fxml"));
-        createCompanyRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/create_company.fxml"));
+        Platform.runLater(() -> {
+            // if you change the UI, do it here !
+            try {
+                loginRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/login.fxml"));
+                registerRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/register.fxml"));
+                introConfigRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/intro_config.fxml"));
+                galaxyRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/galaxy.fxml"));
+                createCompanyRoot = FXMLLoader.load(GameClient.class.getResource("/fxml/create_company.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
     public void refreshLoginRoot() throws IOException {
@@ -212,18 +225,34 @@ public class GameClient extends Preloader {
         this.selectedQuadrant = quadrant;
         this.selectedWorld = world;
 
-        if (this.interfaceClient != null) {
-            this.interfaceClient.endSession();
-        }
-
         this.interfaceClient = InterfaceClientFactory.getClient(config, world);
         this.interfaceClient.beginSession();
+
         this.worldServerDetails = this.interfaceClient.getWorldServerData(this.username, this.password);
+        if (this.worldServerDetails == null) {
+            setState(GameState.GALAXY);
+        }
 
         setState(GameState.WORLD_LOGON);
     }
 
     public Galaxy getGalaxy() {
         return this.galaxy;
+    }
+
+    public ResourceBundle getMessages() {
+        return messages;
+    }
+
+    public Quadrant getQuadrant() {
+        return selectedQuadrant;
+    }
+
+    public World getWorld() {
+        return selectedWorld;
+    }
+
+    public WorldServerDetails getWorldServerDetails() {
+        return worldServerDetails;
     }
 }

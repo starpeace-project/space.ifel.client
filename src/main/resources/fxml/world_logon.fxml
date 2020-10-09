@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="bg-gray" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="bg-gray" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.WorldLogonController">
    <children>
       <AnchorPane maxHeight="768.0" maxWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: transparent;">
          <children>
             <AnchorPane layoutX="9.0" layoutY="15.0" prefHeight="708.0" prefWidth="480.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="15.0">
                <children>
-                  <Pane fx:id="world_data" layoutY="-1.0" prefHeight="714.0" prefWidth="480.0" />
+                  <Pane fx:id="worldData" layoutY="-1.0" prefHeight="714.0" prefWidth="480.0" stylesheets="@css/style.css">
+                     <children>
+                        <ImageView fx:id="worldImage" fitHeight="240.0" fitWidth="264.0" layoutX="108.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="worldName" layoutX="2.0" layoutY="279.0" prefHeight="17.0" prefWidth="480.0" stylesheets="@css/style.css" text="Label">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children></Pane>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="500.0" layoutY="15.0" prefHeight="708.0" prefWidth="480.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="15.0">
                <children>
-                  <Pane fx:id="world_info" prefHeight="713.0" prefWidth="480.0" />
+                  <Pane fx:id="worldInfo" prefHeight="713.0" prefWidth="480.0" />
                </children>
             </AnchorPane>
          </children>

@@ -36,6 +36,12 @@ public class IntroConfigController {
             mediaPlayer.seek(Duration.ZERO);
             mediaPlayer.play();
         });
+
+        if (!config.getKeyBeeps()) {
+            beeper.setVolume(0);
+        } else {
+            beeper.setVolume(config.getBeeperVolume());
+        }
     }
 
     @FXML
@@ -92,7 +98,11 @@ public class IntroConfigController {
         });
 
         closeButton.setOnMouseClicked(event -> {
-            GameClient.getInstance().restoreState();
+            try {
+                GameClient.getInstance().restoreState();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -115,10 +125,10 @@ public class IntroConfigController {
     private void toggleIntroKeyBeeps() {
         config.setKeyBeeps(!config.getKeyBeeps());
 
-        if (beeper.getVolume() != 0) {
-            beeper.setVolume(0);
-        } else {
+        if (config.getKeyBeeps()) {
             beeper.setVolume(config.getBeeperVolume());
+        } else {
+            beeper.setVolume(0);
         }
     }
 

@@ -250,7 +250,6 @@ public class WorldComponent extends AnchorPane {
     }
 
     public void setYear(String year) {
-        System.out.println(year);
         this.yearLabel.setText(year);
     }
 

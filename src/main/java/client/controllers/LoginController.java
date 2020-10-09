@@ -89,13 +89,13 @@ public class LoginController {
     }
 
     @FXML
-    private void configClick() {
+    private void configClick() throws IOException {
         IntroConfigController.getInstance().beep();
         GameClient.getInstance().setState(GameState.INTRO_CONFIG);
     }
 
     @FXML
-    private void goRegister() {
+    private void goRegister() throws IOException {
         GameClient.getInstance().setState(GameState.REGISTER);
     }
 

@@ -29,9 +29,9 @@ public class InterfaceClient implements IInterfaceClient {
         return null;
     }
 
-
     @Override
-    public void endSession() {
+    public void getCompanyList() {
 
     }
+
 }

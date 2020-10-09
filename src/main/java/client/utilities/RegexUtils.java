@@ -5,11 +5,13 @@ import java.util.regex.Pattern;
 
 public class RegexUtils {
     public static int extractInteger(String string) {
+        System.out.println("Extracting integer: " + string);
         String regex = "\"#(\\d+?)\"";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(string);
 
         if (matcher.find()) {
+            System.out.println("Matched: " + matcher.group(1));
             return Integer.parseInt(matcher.group(1));
         }
 
@@ -29,7 +31,7 @@ public class RegexUtils {
     }
 
     public static String extractString(String string) {
-        String regex = "\"$(.+?)\"";
+        String regex = "\"\\$(.+?)\"";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(string);
 

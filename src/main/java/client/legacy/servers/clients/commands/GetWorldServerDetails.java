@@ -11,8 +11,6 @@ public class GetWorldServerDetails {
         // C 22 sel 31287108 get WorldName;A22 WorldName="$Chipango";
         int worldCallNumber = interfaceServer.getCallCounter();
         String worldName = interfaceServer.send("C " + worldCallNumber + " sel " + interfaceServer.getObjectId() + " get WorldName;");
-        worldName = worldName.replace("A" + worldCallNumber + " WorldName=\"$", "");
-        worldName = worldName.replace("\"", "");
         serverDetails.setWorldName(RegexUtils.extractString(worldName));
 
         // C 23 sel 31287108 get WorldURL;A23 WorldURL="$http://willow.starpeaceonline.com/Five/";

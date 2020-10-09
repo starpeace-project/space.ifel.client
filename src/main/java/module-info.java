@@ -9,6 +9,7 @@ module client {
     requires java.desktop;
     requires jackson.annotations;
     requires javafx.media;
+    requires javafx.web;
 
     opens client;
     opens client.controllers to javafx.fxml;
@@ -20,4 +21,5 @@ module client {
     exports client.servers.clients.models.user;
     exports client.servers.clients.models.galaxy;
     exports client.servers.clients.models.factories;
+    exports client.servers.clients.models;
 }
